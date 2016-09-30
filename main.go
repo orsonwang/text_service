@@ -251,7 +251,7 @@ func onTextMessage(text string) (strResult string) {
 }
 
 func main() {
-	urls := "nats://localhost:4222"
+	urls := "nats://demo.gaze.tw:4222"
 	showTime := true
 
 	log.SetFlags(0)
