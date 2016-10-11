@@ -20,6 +20,7 @@ func matchString(pattern, text string) (result bool) {
 
 // OnTextMessage ...
 func onTextMessage(text string) (strResult string) {
+	log.Printf("Receive Text: %s\n", text)
 	strAfterCut := strings.ToUpper(text)
 	strResult = "目前系統功能如下\n" +
 		"利率(預設為台幣),外幣利率\n" +
@@ -250,6 +251,7 @@ func onTextMessage(text string) (strResult string) {
 			"所得稅: 18,180.00 元"
 		break
 	}
+	log.Printf("Return text: %s\n", strResult)
 	return
 }
 
