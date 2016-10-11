@@ -2,7 +2,7 @@ package main
 
 import (
 	//	"fmt"
-	"log"
+	//logger "log"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"

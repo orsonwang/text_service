@@ -1,7 +1,8 @@
 package main
 
 import (
-	"log"
+	logger "log"
+	"os"
 	"regexp"
 	"runtime"
 	"strings"
@@ -9,6 +10,8 @@ import (
 
 	"github.com/nats-io/nats"
 )
+
+var log *logger.Logger
 
 func matchString(pattern, text string) (result bool) {
 	result, _ = regexp.MatchString(pattern, text)
@@ -251,7 +254,14 @@ func onTextMessage(text string) (strResult string) {
 }
 
 func main() {
-	urls := "nats://demo.gaze.tw:4222"
+	f, err := os.OpenFile("./textservice.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0660)
+	if err != nil {
+		log.Fatalf("Can't open log file: %v\n", err)
+	}
+	log = new(logger.Logger)
+	log.SetOutput(f)
+
+	urls := "nats://localhost:4222"
 	showTime := true
 
 	log.SetFlags(0)
@@ -269,7 +279,7 @@ func main() {
 
 	nc, err := nats.Connect(urls)
 	if err != nil {
-		log.Fatalf("Can't connect: %v\n", err)
+		log.Fatalf("Can't connect to NATS: %v\n", err)
 	}
 	var subj = "aitc.text.service"
 
@@ -280,7 +290,7 @@ func main() {
 
 	log.Printf("Listening on [%s]\n", subj)
 	if showTime {
-		log.SetFlags(log.LstdFlags)
+		log.SetFlags(logger.LstdFlags)
 	}
 
 	runtime.Goexit()
