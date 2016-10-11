@@ -266,8 +266,6 @@ func main() {
 	urls := "nats://localhost:4222"
 	showTime := true
 
-	log.SetFlags(0)
-
 	ticker := time.NewTicker(1 * 60 * time.Second)
 
 	exRates = make(map[string]exrate, 0)
